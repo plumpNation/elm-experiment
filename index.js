@@ -3,14 +3,18 @@
 
     function init() {
         setupBanner();
+        setupContent();
     }
 
     function setupBanner() {
         const
-            bannerNode = document.getElementById('banner'),
-            banner     = Elm.Banner.embed(bannerNode);
+            node   = document.getElementById('banner'),
+            banner = Elm.Banner.embed(node);
+    }
 
-        // Note: if your Elm module is named "MyThing.Root" you
-        // would call "Elm.MyThing.Root.embed(node)" instead.
+    function setupContent() {
+        const
+            node   = document.getElementById('content'),
+            banner = Elm.Content.embed(node);
     }
 }(window.Elm));

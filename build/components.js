@@ -8145,7 +8145,7 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
-var _user$project$Banner$main = _elm_lang$virtual_dom$Native_VirtualDom.staticProgram(
+var _plumpnation$elm_experiment$Banner$main = _elm_lang$virtual_dom$Native_VirtualDom.staticProgram(
 	A2(
 		_elm_lang$html$Html$section,
 		{
@@ -8155,14 +8155,36 @@ var _user$project$Banner$main = _elm_lang$virtual_dom$Native_VirtualDom.staticPr
 		},
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html$text('Hello, World!'),
+			_0: _elm_lang$html$Html$text('I am banner'),
+			_1: {ctor: '[]'}
+		}));
+
+var _plumpnation$elm_experiment$Content$main = _elm_lang$virtual_dom$Native_VirtualDom.staticProgram(
+	A2(
+		_elm_lang$html$Html$section,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('content'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text('I am content'),
 			_1: {ctor: '[]'}
 		}));
 
 var Elm = {};
 Elm['Banner'] = Elm['Banner'] || {};
-if (typeof _user$project$Banner$main !== 'undefined') {
-    _user$project$Banner$main(Elm['Banner'], 'Banner', undefined);
+if (typeof _plumpnation$elm_experiment$Banner$main !== 'undefined') {
+    _plumpnation$elm_experiment$Banner$main(Elm['Banner'], 'Banner', undefined);
+}
+Elm['Content'] = Elm['Content'] || {};
+if (typeof _plumpnation$elm_experiment$Content$main !== 'undefined') {
+    _plumpnation$elm_experiment$Content$main(Elm['Content'], 'Content', undefined);
+}
+Elm['Content'] = Elm['Content'] || {};
+if (typeof _plumpnation$elm_experiment$Content$main !== 'undefined') {
+    _plumpnation$elm_experiment$Content$main(Elm['Content'], 'Content', undefined);
 }
 
 if (typeof define === "function" && define['amd'])
