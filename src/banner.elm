@@ -1,3 +1,5 @@
+module Banner exposing (..)
+
 import Html exposing (section, text)
 import Html.Attributes exposing (class)
 
