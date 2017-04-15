@@ -1,8 +1,4 @@
-module Main exposing (..)
-
-import Html exposing (Html, ul, li, text, program)
-import Html.Events exposing (onClick)
-
+import Html exposing (Html, ul, li, text, beginnerProgram)
 
 -- MODEL
 
@@ -11,15 +7,13 @@ type alias Model =
     { tweets: List String }
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( {
-        tweets =
-            [ "This is a tweet"
-            , "This is another tweet"
-            , "This is a tweet"
-            , "This is a tweet" ]
-    }, Cmd.none )
+model : Model
+model = {
+    tweets =
+        [ "This is a tweet"
+        , "This is another tweet"
+        , "This is a tweet"
+        , "This is a tweet" ] }
 
 
 
@@ -45,30 +39,18 @@ view model =
 -- UPDATE
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model -> Model
 update msg model =
     case msg of
         Loaded ->
-            ( model, Cmd.none )
-
-
-
--- SUBSCRIPTIONS
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
-
-
+            model
 
 -- MAIN
 
 
 main =
-    program
-        { init = init
+    beginnerProgram
+        { model = model
         , view = view
         , update = update
-        , subscriptions = subscriptions
         }
