@@ -1,7 +1,8 @@
 module Players.List exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, href)
+import Html.Attributes exposing (class, href, type_)
+import Html.Events exposing (onInput)
 import Msgs exposing (Msg)
 import Models exposing (Player)
 import RemoteData exposing (WebData)
@@ -11,6 +12,7 @@ view : WebData (List Player) -> Html Msg
 view players =
     div []
         [ nav
+        , filter
         , maybeList players
         ]
 
@@ -28,6 +30,13 @@ maybeList response =
 
         RemoteData.Failure error ->
             text (toString error)
+
+
+filter : Html Msg
+filter =
+    div [ class "filter-container" ]
+        [ input [ type_ "text", class "input", onInput Msgs.FilterPlayers ] []
+        ]
 
 
 nav : Html Msg
@@ -69,8 +78,7 @@ editBtn player =
         path =
             playerPath player.id
     in
-        a
-            [ class "btn regular"
-            , href path
+        a [ class "btn regular", href path ]
+            [ i [ class "fa fa-pencil mr1" ] []
+            , span [] [ text "Edit" ]
             ]
-            [ i [ class "fa fa-pencil mr1" ] [], text "Edit" ]

@@ -10,6 +10,7 @@ type Route
 
 type alias Model =
     { players : WebData (List Player)
+    , originalPlayers : WebData (List Player)
     , route : Route
     }
 
@@ -17,6 +18,7 @@ type alias Model =
 initialModel : Route -> Model
 initialModel route =
     { players = RemoteData.Loading
+    , originalPlayers = RemoteData.Loading
     , route = route
     }
 

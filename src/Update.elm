@@ -7,12 +7,17 @@ import Commands exposing (savePlayerCmd)
 import Models exposing (Model, Player)
 import RemoteData
 
+toList remoteData =
+    List.map (\item -> item) remoteData
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        Msgs.FilterPlayers query ->
+            ( filterPlayers model query, Cmd.none )
+
         Msgs.OnFetchPlayers response ->
-            ( { model | players = response }, Cmd.none )
+            ( { model | players = response, originalPlayers = response } , Cmd.none )
 
         Msgs.OnLocationChange location ->
             let
@@ -33,6 +38,20 @@ update msg model =
 
         Msgs.OnPlayerSave (Err error) ->
             ( model, Cmd.none )
+
+filterPlayers : Model -> String -> Model
+filterPlayers model query =
+    let
+        matchesQuery player = String.contains query (String.toLower player.name)
+
+        filterPlayerList players =
+            List.filter matchesQuery players
+
+        filteredPlayers =
+            RemoteData.map filterPlayerList model.originalPlayers
+
+    in
+        { model | players = filteredPlayers }
 
 
 updatePlayer : Model -> Player -> Model
