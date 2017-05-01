@@ -6,6 +6,7 @@ import Routing exposing (parseLocation)
 import Commands exposing (savePlayerCmd)
 import Models exposing (Model, Player)
 import RemoteData
+import Debug
 
 toList remoteData =
     List.map (\item -> item) remoteData
@@ -42,7 +43,7 @@ update msg model =
 filterPlayers : Model -> String -> Model
 filterPlayers model query =
     let
-        matchesQuery player = String.contains query (String.toLower player.name)
+        matchesQuery player = String.contains (String.toLower query) (String.toLower player.name)
 
         filterPlayerList players =
             List.filter matchesQuery players
