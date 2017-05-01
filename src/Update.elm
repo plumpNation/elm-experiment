@@ -6,7 +6,9 @@ import Routing exposing (parseLocation)
 import Commands exposing (savePlayerCmd)
 import Models exposing (Model, Player)
 import RemoteData
-import Debug
+import Debounce exposing (Debounce)
+import Time
+import Task
 
 toList remoteData =
     List.map (\item -> item) remoteData
@@ -14,11 +16,34 @@ toList remoteData =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        Msgs.DebounceFilterPlayers query ->
+            let
+                (debounce, cmd) =
+                    Debounce.push debounceConfig query model.debounce
+            in
+                ( { model
+                  | query = query
+                  , debounce = debounce
+                  }, cmd )
+
         Msgs.FilterPlayers query ->
             ( filterPlayers model query, Cmd.none )
 
+        -- This is where commands are actually sent.
+        -- The logic can be dependent on the current model.
+        -- You can also use all the accumulated values.
+        Msgs.DebounceMsg msg ->
+            let
+                (debounce, cmd) =
+                    Debounce.update debounceConfig (Debounce.takeLast sendFilterPlayers) msg model.debounce
+            in
+                ( { model | debounce = debounce }, cmd )
+
         Msgs.OnFetchPlayers response ->
-            ( { model | players = response, originalPlayers = response } , Cmd.none )
+            ( { model
+              | players = response
+              , originalPlayers = response
+              } , Cmd.none )
 
         Msgs.OnLocationChange location ->
             let
@@ -39,6 +64,20 @@ update msg model =
 
         Msgs.OnPlayerSave (Err error) ->
             ( model, Cmd.none )
+
+-- This defines how the debouncer should work.
+-- Choose the strategy for your use case.
+debounceConfig : Debounce.Config Msg
+debounceConfig =
+    { strategy = Debounce.later (0.5 * Time.second)
+    , transform = Msgs.DebounceMsg
+    }
+
+
+sendFilterPlayers : String -> Cmd Msg
+sendFilterPlayers s =
+    Task.perform Msgs.FilterPlayers (Task.succeed s)
+
 
 filterPlayers : Model -> String -> Model
 filterPlayers model query =

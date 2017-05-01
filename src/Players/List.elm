@@ -35,7 +35,7 @@ maybeList response =
 filter : Html Msg
 filter =
     div [ class "filter-container" ]
-        [ input [ type_ "text", class "input", onInput Msgs.FilterPlayers ] []
+        [ input [ type_ "text", class "input", onInput Msgs.DebounceFilterPlayers ] []
         ]
 
 
