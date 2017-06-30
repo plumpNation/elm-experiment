@@ -11,6 +11,7 @@ matchers =
         [ map PlayersRoute top
         , map PlayerRoute (s "players" </> string)
         , map PlayersRoute (s "players")
+        , map PlayersRoute (s "player")
         ]
 
 
@@ -28,6 +29,11 @@ playersPath =
     "#players"
 
 
-playerPath : PlayerId -> String
-playerPath id =
+addPlayerPath : String
+addPlayerPath =
+    "#player"
+
+
+editPlayerPath : PlayerId -> String
+editPlayerPath id =
     "#players/" ++ id

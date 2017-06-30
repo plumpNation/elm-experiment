@@ -6,6 +6,7 @@ import Models exposing (Model)
 import Msgs exposing (Msg)
 import Players.Edit
 import Players.List
+import Players.Add
 import RemoteData
 
 
@@ -26,6 +27,11 @@ page model =
 
         Models.NotFoundRoute ->
             notFoundView
+
+
+playerAddPage : Html Msg
+playerAddPage =
+    Players.Add.view
 
 
 playerEditPage : Model -> PlayerId -> Html Msg

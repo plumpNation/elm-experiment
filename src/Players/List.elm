@@ -6,12 +6,13 @@ import Html.Events exposing (onInput, onClick)
 import Msgs exposing (Msg)
 import Models exposing (Player)
 import RemoteData exposing (WebData)
-import Routing exposing (playerPath)
+import Routing exposing (editPlayerPath, addPlayerPath)
 
 view : WebData (List Player) -> Html Msg
 view players =
     div []
         [ nav
+        , addPlayerBtn
         , filter
         , maybeList players
         ]
@@ -69,12 +70,24 @@ playerRow player =
         , td [] [ text player.name ]
         , td [] [ text (toString player.level) ]
         , td []
-            [ editBtn player
-            , deleteBtn player ]
+            [ editPlayerBtn player
+            , deletePlayerBtn player ]
         ]
 
-deleteBtn : Player -> Html.Html Msg
-deleteBtn player =
+
+addPlayerBtn : Html.Html Msg
+addPlayerBtn =
+    let
+        path = addPlayerPath
+    in
+        a [ class "btn regular", href path ]
+            [ i [ class "fa fa-trash mr1" ] []
+            , span [] [ text "Add player" ]
+            ]
+
+
+deletePlayerBtn : Player -> Html.Html Msg
+deletePlayerBtn player =
     let
         message =
             Msgs.DeletePlayer player
@@ -84,10 +97,11 @@ deleteBtn player =
             , span [] [ text "Delete" ]
             ]
 
-editBtn : Player -> Html.Html Msg
-editBtn player =
+
+editPlayerBtn : Player -> Html.Html Msg
+editPlayerBtn player =
     let
-        path = playerPath player.id
+        path = editPlayerPath player.id
     in
         a [ class "btn regular", href path ]
             [ i [ class "fa fa-pencil mr1" ] []
