@@ -1,15 +1,15 @@
 module Update exposing (..)
 
 import Msgs exposing (Msg)
-import Models exposing (Model)
+import Models exposing (Model, Player)
 import Routing exposing (parseLocation)
 import Commands exposing (savePlayerCmd)
-import Models exposing (Model, Player)
 import RemoteData
 import Debounce exposing (Debounce)
 import Time
 import Task
 
+toList : List a -> List a
 toList remoteData =
     List.map (\item -> item) remoteData
 
@@ -59,6 +59,9 @@ update msg model =
             in
                 ( model, savePlayerCmd updatedPlayer )
 
+        Msgs.DeletePlayer player ->
+            ( deletePlayer model player, Cmd.none)
+
         Msgs.OnPlayerSave (Ok player) ->
             ( updatePlayer model player, Cmd.none )
 
@@ -89,6 +92,21 @@ filterPlayers model query =
 
         filteredPlayers =
             RemoteData.map filterPlayerList model.originalPlayers
+
+    in
+        { model | players = filteredPlayers }
+
+
+deletePlayer: Model -> Player -> Model
+deletePlayer model deletedPlayer =
+    let
+        idsMatch player = deletedPlayer.id /= player.id
+
+        filterOutPlayer players =
+            List.filter idsMatch players
+
+        filteredPlayers =
+            RemoteData.map filterOutPlayer model.players
 
     in
         { model | players = filteredPlayers }

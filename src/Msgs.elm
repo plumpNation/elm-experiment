@@ -12,6 +12,7 @@ type Msg
     | OnLocationChange Location
     | ChangeLevel Player Int
     | OnPlayerSave (Result Http.Error Player)
+    | DeletePlayer Player
     | FilterPlayers String
     | DebounceFilterPlayers String
     | DebounceMsg Debounce.Msg
