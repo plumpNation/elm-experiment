@@ -40,8 +40,7 @@ update msg model =
                 ( { model | debounce = debounce }, cmd )
 
         Msgs.OnFetchPlayers response ->
-            ( { model
-              | players = response
+            ( { model | players = response
               , originalPlayers = response
               } , Cmd.none )
 
