@@ -9,9 +9,9 @@ matchers : Parser (Route -> a) a
 matchers =
     oneOf
         [ map PlayersRoute top
-        , map PlayerRoute (s "players" </> string)
+        , map PlayerEditRoute (s "players" </> string)
+        , map PlayerAddRoute (s "player")
         , map PlayersRoute (s "players")
-        , map PlayersRoute (s "player")
         ]
 
 

@@ -6,7 +6,8 @@ import Debounce exposing (Debounce)
 
 type Route
     = PlayersRoute
-    | PlayerRoute PlayerId
+    | PlayerEditRoute PlayerId
+    | PlayerAddRoute
     | NotFoundRoute
 
 

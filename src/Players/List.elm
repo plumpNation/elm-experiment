@@ -81,7 +81,7 @@ addPlayerBtn =
         path = addPlayerPath
     in
         a [ class "btn regular", href path ]
-            [ i [ class "fa fa-trash mr1" ] []
+            [ i [ class "fa fa-plus mr1" ] []
             , span [] [ text "Add player" ]
             ]
 

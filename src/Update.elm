@@ -29,9 +29,6 @@ update msg model =
         Msgs.FilterPlayers query ->
             ( filterPlayers model query, Cmd.none )
 
-        -- This is where commands are actually sent.
-        -- The logic can be dependent on the current model.
-        -- You can also use all the accumulated values.
         Msgs.DebounceMsg msg ->
             let
                 (debounce, cmd) =

@@ -22,8 +22,11 @@ page model =
         Models.PlayersRoute ->
             Players.List.view model.players
 
-        Models.PlayerRoute id ->
+        Models.PlayerEditRoute id ->
             playerEditPage model id
+
+        Models.PlayerAddRoute ->
+            playerAddPage
 
         Models.NotFoundRoute ->
             notFoundView
