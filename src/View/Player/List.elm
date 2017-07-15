@@ -1,4 +1,4 @@
-module Players.List exposing (..)
+module View.Player.List exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, href, type_)

@@ -24,8 +24,8 @@ parseLocation location =
         Nothing ->
             NotFoundRoute
 
-playersPath : String
-playersPath =
+playersListPath : String
+playersListPath =
     "#players"
 
 

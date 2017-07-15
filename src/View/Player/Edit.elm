@@ -1,11 +1,11 @@
-module Players.Edit exposing (..)
+module View.Player.Edit exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, value, href)
 import Html.Events exposing (onClick)
 import Msgs exposing (Msg)
 import Models exposing (Player)
-import Routing exposing (playersPath)
+import Routing exposing (playersListPath)
 
 view : Player -> Html Msg
 view model =
@@ -67,6 +67,6 @@ listBtn : Html Msg
 listBtn =
     a
         [ class "btn regular"
-        , href playersPath
+        , href playersListPath
         ]
         [ i [ class "fa fa-chevron-left mr1" ] [], text "List" ]
