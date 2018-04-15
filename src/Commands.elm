@@ -8,6 +8,16 @@ import Msgs exposing (Msg)
 import Models exposing (PlayerId, Player)
 import RemoteData
 
+import I18Next
+
+fetchTranslations : Cmd Msg
+fetchTranslations =
+    I18Next.fetchTranslations Msgs.OnTranslationsLoaded fetchTranslationsUrl
+
+fetchTranslationsUrl : String
+fetchTranslationsUrl =
+    "http://localhost:3000/locale/translation.en.json"
+
 fetchPlayers : Cmd Msg
 fetchPlayers =
     Http.get fetchPlayersUrl playersDecoder

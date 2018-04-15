@@ -9,13 +9,21 @@ import Debounce exposing (Debounce)
 import Time
 import Task
 
+
 toList : List a -> List a
 toList remoteData =
     List.map (\item -> item) remoteData
 
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        Msgs.OnTranslationsLoaded (Ok translations) ->
+            ({ model | translations = translations }, Cmd.none )
+
+        Msgs.OnTranslationsLoaded (Err msg) ->
+            ( model, Cmd.none )
+
         Msgs.DebounceFilterPlayers query ->
             let
                 (debounce, cmd) =

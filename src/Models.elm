@@ -3,6 +3,10 @@ module Models exposing (..)
 import RemoteData exposing (WebData)
 import Debounce exposing (Debounce)
 
+import I18Next exposing
+      (Translations
+      , initialTranslations
+      )
 
 type Route
     = PlayersRoute
@@ -12,7 +16,8 @@ type Route
 
 
 type alias Model =
-    { players : WebData (List Player)
+    { translations: Translations
+    , players : WebData (List Player)
     , originalPlayers : WebData (List Player)
     , query : String
     , route : Route
@@ -22,7 +27,8 @@ type alias Model =
 
 initialModel : Route -> Model
 initialModel route =
-    { players = RemoteData.Loading
+    { translations = initialTranslations
+    , players = RemoteData.Loading
     , originalPlayers = RemoteData.Loading
     , query = ""
     , route = route

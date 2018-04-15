@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -56,6 +57,12 @@ module.exports = {
 
         noParse: /\.elm$/,
     },
+
+    plugins: [
+        new CopyWebpackPlugin([
+            { from: 'locale/**/*', to: 'dist/' }
+        ])
+    ],
 
     devServer: {
         inline: true,

@@ -2,12 +2,13 @@ module View exposing (..)
 
 import Html exposing (Html, div, text)
 import Models exposing (Model, PlayerId)
-import Models exposing (Model)
 import Msgs exposing (Msg)
 import View.Player.Edit
 import View.Player.List
 import View.Player.Add
 import RemoteData
+
+import I18Next exposing (t, Translations)
 
 
 view : Model -> Html Msg
@@ -20,21 +21,21 @@ page : Model -> Html Msg
 page model =
     case model.route of
         Models.PlayersRoute ->
-            View.Player.List.view model.players
+            View.Player.List.view model
 
         Models.PlayerEditRoute id ->
             playerEditPage model id
 
         Models.PlayerAddRoute ->
-            playerAddPage
+            playerAddPage model
 
         Models.NotFoundRoute ->
-            notFoundView
+            notFoundView model
 
 
-playerAddPage : Html Msg
-playerAddPage =
-    View.Player.Add.view
+playerAddPage : Model -> Html Msg
+playerAddPage model =
+    View.Player.Add.view model
 
 
 playerEditPage : Model -> PlayerId -> Html Msg
@@ -44,7 +45,7 @@ playerEditPage model playerId =
             text ""
 
         RemoteData.Loading ->
-            text "Loading ..."
+            text (t model.translations "Loading ...")
 
         RemoteData.Success players ->
             let
@@ -52,20 +53,21 @@ playerEditPage model playerId =
                     players
                         |> List.filter (\player -> player.id == playerId)
                         |> List.head
+
             in
                 case maybePlayer of
                     Just player ->
-                        View.Player.Edit.view player
+                        View.Player.Edit.view model player
 
                     Nothing ->
-                        notFoundView
+                        notFoundView model
 
         RemoteData.Failure err ->
             text (toString err)
 
 
-notFoundView : Html msg
-notFoundView =
+notFoundView : Model -> Html Msg
+notFoundView model =
     div []
-        [ text "Not found"
+        [ text (t model.translations "NOT_FOUND")
         ]

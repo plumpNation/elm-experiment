@@ -4,30 +4,31 @@ import Html exposing (..)
 import Html.Attributes exposing (class, href, type_)
 import Html.Events exposing (onInput, onClick)
 import Msgs exposing (Msg)
-import Models exposing (Player)
+import Models exposing (Model, Player)
 import RemoteData exposing (WebData)
 import Routing exposing (editPlayerPath, addPlayerPath)
+import I18Next exposing (t, Translations)
 
-view : WebData (List Player) -> Html Msg
-view players =
+view : Model -> Html Msg
+view model =
     div []
         [ nav
         , addPlayerBtn
         , filter
-        , maybeList players
+        , maybeList model.translations model.players
         ]
 
-maybeList : WebData (List Player) -> Html Msg
-maybeList response =
-    case response of
+maybeList : Translations -> WebData (List Player) -> Html Msg
+maybeList translations players =
+    case players of
         RemoteData.NotAsked ->
             text ""
 
         RemoteData.Loading ->
-            text "Loading..."
+            text (t translations "Loading...")
 
         RemoteData.Success players ->
-            list players
+            list translations players
 
         RemoteData.Failure error ->
             text (toString error)
@@ -46,16 +47,16 @@ nav =
         [ div [ class "left p2" ] [ text "Players" ] ]
 
 
-list : List Player -> Html Msg
-list players =
+list : Translations -> List Player -> Html Msg
+list translations players =
     div [ class "p2" ]
         [ table []
             [ thead []
                 [ tr []
                     [ th [] [ text "Id" ]
-                    , th [] [ text "Name" ]
-                    , th [] [ text "Level" ]
-                    , th [] [ text "Actions" ]
+                    , th [] [ text (t translations "Name") ]
+                    , th [] [ text (t translations "Level") ]
+                    , th [] [ text (t translations "Actions") ]
                     ]
                 ]
             , tbody [] (List.map playerRow players)
